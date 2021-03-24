@@ -1,0 +1,36 @@
+const db = require('../persistence');
+const uuid = require('uuid/v4');
+const fetch = require('node-fetch');
+
+module.exports = async (req, res) => {
+    fetch('https://endika-generatedata.azurewebsites.net/api/GenerateData?number=' + req.params.number, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+    })
+        .then(r => r.json())
+        .then(items => {
+            newItems = []
+            if (items.error === 0) {
+                items.tasks.forEach(element => {
+                    newItems.push(addItem(element));
+                });
+            } else {
+                res.send([]);
+            }
+
+            Promise.all(newItems)
+                .then(r => {
+                    res.send(r);
+                });
+        });
+};
+async function addItem(element) {
+    const item = {
+        id: uuid(),
+        name: element.name,
+        completed: element.completed,
+    };
+
+    await db.storeItem(item);
+    return item
+}

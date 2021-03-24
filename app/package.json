@@ -1,0 +1,15 @@
+{
+  "name": "101-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1",
+    "sqlite3": "^4.1.0",
+    "uuid": "^3.3.3",
+    "wait-port": "^0.2.2",
+    "node-fetch": "^2.6.1"
+  }
+}
